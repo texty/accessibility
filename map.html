@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Animation - LineString&#x27;s animateShow</title>
+  <style type="text/css">
+
+    body {
+        font-family: "Raleway", sans-serif;
+    }
+
+#map-wrapper, 
+#legend-container2 {
+    grid-column:1/-1;
+}
+
+    #map-wrapper { 
+        display: block;
+        max-width:800px; 
+        width: 100%; 
+        height:  700px; 
+        margin: auto;
+    }
+
+    #map {
+        width:100%; 
+        margin: 0;
+        height: 100vh;
+    }
+
+    .label, .endpoint {
+      font-size: 12px;
+      font-family: 'Raleway';
+      margin-top: 0px;
+      margin-left: 60px;
+    }
+
+    #scroll {
+        grid-column: 1/-1;
+        position: relative;
+        width: 100vw;
+        margin: 50px auto 50px auto;
+        display: grid;
+        grid-template-columns: 4fr 2fr 1fr;
+        grid-gap: 5px;
+    }
+
+
+    .scroll__graphic {
+        grid-column: 1/-1;
+        width: 100%;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        left: 0;
+        overflow-y: auto;
+        margin: 0 auto;
+        z-index: 0;
+    }
+
+    .scroll__text {
+        grid-column: 2/3;
+        margin: 0 auto;
+        z-index: 100;
+         z-index: 1;
+         -webkit-transform: translate3d(0,0,0);
+    }
+
+    .step {
+        padding: 15px;
+        height: max-content;
+        margin-bottom: 60vh;
+        font-size: 19px;
+        min-height: 50vh;
+    }
+
+    .video-container {
+        margin: auto;
+        width: 400px;
+        height: 400px;
+        max-width: 90vw;
+        max-height: 90vw;
+        border-radius: 50%;
+        display: block;
+        overflow: hidden;
+        box-sizing: border-box;
+        position: relative;
+    }
+
+.video-container video {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.image-container, .photo-container {
+    	display: block;
+    	overflow: hidden;
+    	box-sizing: border-box;
+    	position: relative;
+        direction: ltr;
+    }
+    
+    .image-container > img {
+        width: 115%;
+    	pointer-events: none;
+        top: -15%;
+    	position: relative;
+    	-moz-user-select: none;
+    }
+
+    .circle {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 50%;
+        max-width: 400px;
+        margin: auto;
+    }
+
+    .photo-container  {
+        width: 300px;
+        height: 300px;
+        max-width: 300px;
+        border-radius: 50%;
+        float: left;
+        shape-outside: circle();
+        margin: 1em;
+    }
+
+    .main {
+        max-width: 900px;
+        margin:auto;
+        font-size: 19px;
+    }
+
+    .tomato {
+        margin-bottom: 0;
+        width: 150%;
+        margin-left:-90px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;500&display=swap" rel="stylesheet">
+<script src="https://texty.org.ua/documents/149/scrollama.min.js"></script>
+<script src="https://texty.org.ua/documents/80/jquery-3.3.1.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/maptalks/dist/maptalks.min.js"></script>
+  <script src="https://unpkg.com/maptalks.esri/dist/maptalks.esri.js"></script>
+
+
+
+  <body>
+    <div class="main">
+        <div class="photo-container photo">
+            <img class='tomato' src="img/image16.jpg"/>
+        </div>
+
+       
+        <p class="text">10 ранку, понеділок. Я сиджу на задньому сидінні машині Сергія разом з його дружиною та маленьким песиком Жулею, який спить біля моєї ноги. Ми ховаємось від дощу за вікном,
+            який не вщухає вже годину. </p>
+        <p class="text"> ‒ Знаєте, я навчилась кататись на велосипеді у 18 років, ‒ згадую я, ‒ Раніше ніколи не думала про те, наскільки некомфортною і небезпечною штукою є бордюр, поки не
+            врізалась в нього і впала з велосипеду. Як змінилось ваше життя після того, як ви втратили
+            ноги?
+            </p>
+            <p>‒ Звичайно, що я почав помічати всі ці бордюри і сходинки, які просто не зауважуєш, коли йдеш своїми ногами, ‒ говорить Сергій Копищик. ‒ І так стало образливо. І раніше ж були люди без ніг, зараз їх ще більше, чому ж така проблема зробити комфортний з’їзд з бордюру чи пандус? От військовим зі зламаними ногами ставлять спиці і їм також треба пересуватись на візках, але робити це самостійно неможливо.</p>
+            <p>Одразу розумію, що для Сергія і його дружини Світлани ‒ болюча тема. Вони згадують безліч прикладів, як не могли потрапити до якогось закладу, бо там не було пандуса. Навіть
+                вулицями пересуватися складно.</p>
+    </div>
+  
+    <section class="story">
+        <section id='scroll'>
+            <div class='scroll__graphic sticky'>
+                <div class="map-wrapper">
+                    <div id="map" class="container"></div>
+                  </div>
+              
+            </div>
+    
+    
+            <div class='scroll__text'>
+                <div class="step" data-line="1" data-point="">
+                    <div>
+                        <p>Ми виходимо з машини і рушаємо вулицями 40-го кварталу. Дощ ненадовго припинився, але все ще хмарно.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2324.MOV" autoplay loop muted>
+                            </video>
+                    </div>
+                    </div>
+                 </div>   
+                
+    
+                <div class="step" data-line="2" data-point="">
+                    <div>
+                        <p>Навколо пахне сирістю, а на тротуарах залишилась купа бруду. На асфальті з'явились десятки маленьких калюж-дзеркал, які намагається оминати дружина Сергія, поки везе його на кріслі колісному.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2325.MOV" autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="step"  data-line="3" data-point="">
+                    <div>
+                        <p>Тут дорожнє покриття більш-менш рівне, ми безперешкодно проїжджаємо повз будинки, магазинчики та аптеки, і Сергій зі Світланою розповідають, у чому недоліки входів до цих будівель. Кожен бордюр ‒ це бар’єр, щоразу потрібно зупинятися, піднімати крісло чи розвертати його, щоб заїхати на підвищення.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2335.MOV" autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="step" data-line="3" data-point="">
+                    <div>
+                        <p>Світлана та Сергій пояснюють, що наявність пандуса ‒ це ще не вирішена проблема. ‒ От подивіться, наскільки високий кут нахилу пандуса, навіть якщо я буду завозити туди Сергія, ми все одно не заїдемо, ‒ показує Світлана на один із закладів.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2338.MOV" autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="step" data-line="4" data-point="">
+                    <div>
+                        <p>На карті нашого дослідження доступності 40-й квартал – це переважно “червоні” ділянки, через які неможливо пробратися на колісному кріслі. Тротуар на одній з таких ділянок виглядає жахливо, ніби хтось, накидавши щебня, просто забув залити його асфальтом.  Тротуар на одній з таких ділянок виглядає жахливо, ніби хтось, накидавши щебня, просто забув залити його асфальтом. </p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2340.MOV" autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="4" data-point="">
+                    <div>
+                        <p> Світлана відпускає Сергія і він починає крутити колеса. Крісло на хіднику гойдає в різні боки, мов корабель у шторм. Мені здається, що воно зараз перекинеться.</p>
+                        <div class="image-container circle">
+                            <img style='width:150%; top:0; left:-20%;' src="video/location_IMG_5645.JPG"/>
+                        </div>
+                    </div>
+                </div>
+    
+    
+                <div class="step" data-line="4" data-point="4">
+                    <div>
+                        <p>Протестувавши найгірший хідник на районі, переходимо на інший бік вулиці, де покриття здалеку наче виглядає кращим.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2341.MOV" autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="5" data-point="4">
+                    <div>
+                        <p>Ми проходимо повз будинок зі свіжим різнокольоровим фасадом. Тут зробили ремонт і утеплення стін, але забули про доступність.  Біля деяких під’їздів встановлені пандуси, але щоб дістатись до них, треба подолати нерівне асфальтове покриття і височенний бордюр.</p>
+                        <div class="video-container">
+                            <video class='video' style='top:20%;' src="video/IMG_2345.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="6" data-point="4">
+                    <div>
+                        <p>Біля однієї з перешкод у дворах, коли я безуспішно намагалась натиснути на важелі, хтось із перехожих (вперше) запропонував нам допомогу. Вона б і не знадобилась, якщо б у цих дворах був хоча б один нормальний заїзд на тротуар. Врешті, з допомогою Світлани ми долаємо маленький бордюр, на який би у звичайний свій день навіть не звернула уваги. </p>
+                        <div class="video-container">
+                            <video class='video' style='top:20%;' src="video/IMG_2348.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="6" data-point="4">
+                    <div>
+                        <p>Цей бордюр на нашому шляху до парку здається невисоким, але крісло потрібно розвертати і акуратно спускати.  </p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2351.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="7" data-point="4">
+                    <div>
+                        <p>Тут я знайшла нарешті знайшла безперешкодний з'їзд, радію, як дитина.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2352.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="7" data-point="6">
+                    <div>
+                        <p>Далі ми йдемо з візком поміж автівок у дворах, потім перебігаємо з ним дорогу, щоб потрапити до парку – пішохідні переходи, виявляється, занадто далеко.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2354.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="8" data-point="6">
+                    <div>
+                        <p>Не могли заїхати в парк, бо тротуар був зависоким</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2355.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="9" data-point="7">
+                    <div>
+                        <p>Нарешті заходимо у сквер Героїв Майдану і Небесного легіону. Сергій купує усім каву (в сквері є кав’ярня кіоск з низьким віконечком, отже йому зручно брати каву) і ми йдемо на лавочку. </p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2356.MOV" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step" data-line="9" data-point="8">
+                    <div>
+                        <p>Ремонт скверу зробили недавно і його намагались зробити доступним, не всі деталі прорахували. Наприклад, газон, на якому стоїть лавка, розташований значно нижче тротуару, тому Сергій не може з’їхати з нього, щоб сісти біля нас. Він залишається на вузькому тротуарі, говорить до нас здалека і весь час совається, щоб пропустити людей, які проходять повз нас. </p>
+                         <div class="image-container circle">
+                            <img style='width:150%; top:0; left:-25%;' src="video/location_IMG_5759.JPG"/>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step" data-line="9" data-point="9">
+                    <div>
+                        <p>Виходимо з парку, прощаємося. Сергій вдягає свої протези і піднімається з крісла. Пересуватися вулицями міста на протезах теж непросто.</p>
+                        <div class="video-container">
+                            <video class='video' src="video/IMG_2360.mov" controls autoplay loop muted></video>
+                        </div>
+                    </div>
+                </div>
+
+                
+        </div>
+    </section>
+    </section>
+
+
+    <script>
+
+      // Get a reference to the map container
+    var container = document.getElementById('legend-container2');
+
+
+    var linesData =  [
+    { "type": "Feature", "properties": { "color": "#88E88E", "id": 1 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.362027251614666, 50.774653301888272 ], [ 25.3615039113592, 50.774109910529319 ] ] } },
+    { "type": "Feature", "properties": { "color": "#88E88E", "id": 3 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.360805273196636, 50.773393006229448 ], [ 25.360953397305977, 50.773326398199906 ], [ 25.360794539025214, 50.773196712791041 ], [ 25.360756501288574, 50.773002714435464 ], [ 25.360736772377663, 50.772867931269907 ], [ 25.360745437374799, 50.772791215249114 ], [ 25.360963323289841, 50.772574507787319 ], [ 25.361156479024999, 50.772496824354668 ], [ 25.361367578385888, 50.772412508809246 ], [ 25.36130017840842, 50.772324431670242 ], [ 25.360829036808777, 50.772474412967362 ], [ 25.360648599829005, 50.772498021641553 ], [ 25.36042149811308, 50.772488184695426 ], [ 25.360213062291614, 50.772464576016269 ], [ 25.360033526451488, 50.772404711152511 ], [ 25.359845966367253, 50.772283575746869 ], [ 25.359657255345063, 50.772084701911965 ], [ 25.357280339889481, 50.769674638936621 ] ] } },
+    { "type": "Feature", "properties": { "color": "#F7524A", "id":4 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.357280339889481, 50.769674283312142 ], [ 25.358954878338704, 50.76901749585555 ], [ 25.358920146446909, 50.768956353928708 ] ] } },
+    { "type": "Feature", "properties": { "color": "#FCC785", "id": 6}, "geometry": { "type": "LineString", "coordinates": [ [ 25.359995813664622, 50.768231485919827 ], [ 25.359673489192449, 50.76790012762546 ], [ 25.360062793062426, 50.767721169943805 ], [ 25.359627475024105, 50.767149340168963 ], [ 25.359778162037369, 50.767022265936475 ], [ 25.359895363047688, 50.766874012229025 ], [ 25.36000419255727, 50.766709873647763 ], [ 25.360339052586742, 50.766831653940599 ] ] } },
+    { "type": "Feature", "properties": { "color": "#88E88E", "id": 9 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.36219156860798, 50.766175854104176 ], [ 25.363351616377869, 50.766014317057092 ], [ 25.363439377308026, 50.765628215995775 ], [ 25.366396072435077, 50.764445968514167 ] ] } },
+    { "type": "Feature", "properties": { "color": "#F7524A", "id": 2 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.361502701646835, 50.77410876303351 ], [ 25.360795078796233, 50.77343228008548 ] ] } },
+    { "type": "Feature", "properties": { "color": "#88E88E", "id": 7 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.360391236997334, 50.766839984468824 ], [ 25.361837287881485, 50.766278099902685 ] ] } },
+    { "type": "Feature", "properties": { "color": "#FCC785", "id": 8 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.361839169433672, 50.766277610176623 ], [ 25.362184769038802, 50.766179737885814 ] ] } },
+    { "type": "Feature", "properties": { "color": "#F7524A", "id": 5 }, "geometry": { "type": "LineString", "coordinates": [ [ 25.358914960486853, 50.768956353928708 ], [ 25.358731723231436, 50.768710364104692 ], [ 25.359995147572853, 50.768231985688004 ] ] } }
+]
+
+ 
+
+    var pointsData =  [
+    { "type": "Feature", "properties": { "id": 1, "label": "початок маршруту" }, "geometry": { "type": "Point", "coordinates": [ 25.362311578113946, 50.775154246804625 ] } },
+    { "type": "Feature", "properties": { "id": 2, "label": "перейшли дорогу" }, "geometry": { "type": "Point", "coordinates": [ 25.360801393142037, 50.77344625531309 ] } },
+    { "type": "Feature", "properties": { "id": 3, "label": "жахливий хідник" }, "geometry": { "type": "Point", "coordinates": [ 25.357279924377007, 50.769674382592527 ] } },
+    { "type": "Feature", "properties": { "id": 4, "label": "перейшли дорогу, \nбо неможливо було йти" }, "geometry": { "type": "Point", "coordinates": [ 25.358913661927151, 50.768872938778266 ] } },
+    { "type": "Feature", "properties": { "id": 5, "label": "зайшли у двори" }, "geometry": { "type": "Point", "coordinates": [ 25.360191510749534, 50.768340274449265 ] } },
+    { "type": "Feature", "properties": { "id": 6, "label": "перебігали дорогу, \nбо перехід далеко" }, "geometry": { "type": "Point", "coordinates": [ 25.362059066822813, 50.766188192370429 ] } },
+    { "type": "Feature", "properties": { "id": 8, "label": "сиділи на лавочці" }, "geometry": { "type": "Point", "coordinates": [ 25.363347578009193, 50.766012300109978 ] } },
+    { "type": "Feature", "properties": { "id": 7, "label": "купили каву" }, "geometry": { "type": "Point", "coordinates": [ 25.363431006791043, 50.765631197943797 ] } },
+    { "type": "Feature", "properties": { "id": 9, "label": "кінець маршруту" }, "geometry": { "type": "Point", "coordinates": [ 25.366400918323073, 50.764441997363264 ] } }
+    ]
+
+
+
+
+
+    var ESRI_gray = 'https://services.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/';
+
+    mapCenter = window.innerWidth > 800 ? [25.37000, 50.77032] : [25.363854,50.768075]
+
+    
+maptalks.SpatialReference.loadArcgis(ESRI_gray + '?f=pjson', function (err, conf) {
+  if (err) {
+    throw new Error(err);
+  }
+  var ref = conf.spatialReference;
+  ref.projection = 'EPSG:3857';
+  ref.fullExtent = null;
+  
+  var map = new maptalks.Map('map', {
+    center: mapCenter,
+    zoom: 15,
+    minZoom: 15,
+    maxZoom: 15,
+    scrollWheelZoom: false,
+    spatialReference : ref,
+    baseLayer: new maptalks.TileLayer('base', {
+      'tileSystem' : conf.tileSystem,
+      'tileSize' : conf.tileSize,
+      'urlTemplate' : ESRI_gray + '/tile/{z}/{y}/{x}',
+      'attribution' : '&copy; <a target="_blank" href="' + ESRI_gray + '"">ArcGIS</a>'
+    })
+  });
+  var lineslayer = new maptalks.VectorLayer('lines').addTo(map);
+  var pointsLayer = new maptalks.VectorLayer('points').addTo(map);
+  var labelsLayer = new maptalks.VectorLayer('labels').addTo(map);
+  
+
+var lines = {};
+var points = {};
+var labels = {}
+
+      for (var i = 0; i < linesData.length; i++) {
+        lines[linesData[i].properties.id] = generateLine(linesData[i].geometry.coordinates, linesData[i].properties.color).addTo(lineslayer);
+      }
+
+      for (var i = 0; i < pointsData.length; i++) {
+        points[pointsData[i].properties.id] = generateMarker(pointsData[i].geometry.coordinates, pointsData[i].properties.id)
+            .addTo(pointsLayer);
+        
+        labels[pointsData[i].properties.id] = generateLabel(pointsData[i].geometry.coordinates, pointsData[i].properties.label, pointsData[i].properties.id)
+            .addTo(labelsLayer);
+      }
+
+    points[1].setOptions( { "visible" : true }).show();
+    labels[1].setOptions( { "visible" : true }).show();
+ 
+
+    var container = document.querySelector('#scroll');
+    var graphic = document.querySelector('#scroll > .scroll__graphic');
+    var text = document.querySelector('#scroll > .scroll__text');
+    var step = document.querySelector('#scroll > .scroll__text > .step');
+    var scroller = scrollama();
+
+    function handleStepEnter(r) {
+        let theLine = $(r.element).data("line");
+        let thePoint = $(r.element).data("point");
+    
+        if(r.direction === "down") {
+            if(theLine){
+                lines[theLine].setOptions( { "visible" : true }).show();
+            }
+            
+            if(thePoint){
+                points[thePoint].setOptions( { "visible" : true}).show();
+                labels[thePoint].setOptions( { "visible" : true}).show();
+            }
+        } 
+
+        if(r.direction === "up") {
+            if(thePoint){
+                for(pointID in points){
+                    if(pointID >= thePoint){
+                        points[pointID].setOptions( { "visible" : false }).hide();
+                        labels[pointID].setOptions( { "visible" : false }).hide();
+                    }
+                }
+            }
+            if(theLine){
+                for(lineID in lines){
+                    if(lineID >= theLine){
+                        lines[lineID].setOptions( { "visible" : false }).hide();
+                    }
+                }
+               
+            }
+
+        }
+
+    }
+
+
+      function init() {
+            scroller.setup({
+                container: '#scroll',
+                graphic: '.scroll__graphic',
+                text: '.scroll__text',
+                step: '.scroll__text .step',
+                offset: 0.5,
+                debug: false,
+            })
+                .onStepEnter(handleStepEnter);
+
+        }
+        init();
+      
+     
+
+      
+      function generateMarker(coords, id){
+        var marker = new maptalks.Marker(coords,
+        {
+            visible : false,
+          'symbol' :  {
+            'markerType': 'ellipse',
+            'markerFill': 'black',
+            'markerFillOpacity': 1,
+            'markerLineColor': 'gray',
+            'markerLineWidth': 0.5,
+            'markerLineOpacity': 1,
+            'markerLineDasharray':[],
+            'markerWidth': 10,
+            'markerHeight': 10,
+            'markerDx': 0,
+            'markerDy': 0,
+            'markerOpacity' : 1
+          }
+       })
+       return marker;
+    }
+   
+
+
+
+    function generateLabel(coords, label, id){
+      var label= new maptalks.Label(label,
+      coords,
+        {
+          visible : false,
+          'draggable' : true,
+          'textSymbol': {
+            'textFaceName' : 'Raleway',
+            'textFill' : 'black',
+            'textHaloFill' : '#fff',
+            'textHaloRadius' : 0,
+            'textSize' : 14,
+            'textDy': id=== 6 ? 10: -5, 
+            'textDx': id=== 6 ? -20: 7, 
+            'textLineSpacing': -1,
+            'textWeight' : 'normal',
+            'textVerticalAlignment' : 'center',
+            'textHorizontalAlignment': id=== 6 ? "left": 'right'
+          }
+        })
+        return label
+      }
+
+      function generateLine(df, color){
+        var path = new maptalks.LineString(df, {
+        visible : false,
+        symbol: {
+          'lineColor' : color, 
+          'lineWidth' : 4,
+          'lineDasharray': [],
+        }
+      });
+      return path;
+      }
+    });
+
+
+
+    
+       
+   
+    </script>
+  </body>
+</html>
